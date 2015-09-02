@@ -66,6 +66,9 @@ var CameraView = React.createClass({
       console.log('Current State: ' + self.state.capturedImage);
      self.state.capturedImage = data.toString();
      console.log('New State: ' + self.state.capturedImage);
+     self.setState({capturedImage:data.toString()},function(){
+      console.log('state changed');
+     })
       self.render();
     });
   }
