@@ -25,6 +25,7 @@ class Main extends Component {
       eventCode: '',
       loggedIn: false,
       isLoading: false
+      
     }
   }
 

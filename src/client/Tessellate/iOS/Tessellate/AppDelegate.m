@@ -33,6 +33,7 @@
 
   jsCodeLocation = [NSURL URLWithString:@"http://10.6.1.173:8081/index.ios.bundle"];
   // Simulator Testing: http://localhost:8081/index.ios.bundle
+  //  Phone Testing:@"http://10.6.1.173:8081/index.ios.bundle
   /**
    * OPTION 2
    * Load from pre-bundled file on disk. To re-generate the static bundle
