@@ -17,7 +17,8 @@ var CameraView = React.createClass({
   getInitialState() {
     return {
       cameraType: Camera.constants.Type.back,
-      capturedImage: 'assets-library://asset/asset.JPG?id=291C00B0-0088-48A1-AB2C-3EC9523806B2&ext=JPG'
+      capturedImage: 'assets-library://asset/asset.JPG?id=291C00B0-0088-48A1-AB2C-3EC9523806B2&ext=JPG',
+      imageCaptured: false
     }
   },
 
@@ -30,7 +31,10 @@ var CameraView = React.createClass({
                 style={styles.container}
                 type={this.state.cameraType}
               >
+              <View>
               <Image style={styles.capturedImageContainer} source={{uri: this.state.capturedImage}}/>
+              </View>
+                
                  <TouchableHighlight style= {styles.switchButton} 
                onPress={this._switchCamera}>
                   <Text>Switch View</Text>
@@ -40,10 +44,7 @@ var CameraView = React.createClass({
                 onPress={this._takePicture}>
                   <Text style={styles.buttonText}>Take Picture</Text>
                 </TouchableHighlight>
-
-                
-
-                
+  
           </Camera>
       
      
@@ -63,13 +64,12 @@ var CameraView = React.createClass({
     var self = this;
     this.refs.cam.capture(function(err, data) {
       //console.log(err, data.toString());
-      console.log('Current State: ' + self.state.capturedImage);
-     self.state.capturedImage = data.toString();
-     console.log('New State: ' + self.state.capturedImage);
+     //self.state.capturedImage = data.toString();
+     self.setState({imageCaptured:true});
      self.setState({capturedImage:data.toString()},function(){
-      console.log('state changed');
      })
-      self.render();
+
+      
     });
   }
 
