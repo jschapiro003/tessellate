@@ -17,36 +17,40 @@ var CameraView = React.createClass({
   getInitialState() {
     return {
       cameraType: Camera.constants.Type.back,
-      capturedImage: 'assets-library://asset/asset.JPG?id=291C00B0-0088-48A1-AB2C-3EC9523806B2&ext=JPG',
+      capturedImage: 'placeholder.img',
       imageCaptured: false
     }
   },
 
   render() {
 
-
+    var imageBackground = { 
+      opacity: this.state.imageCaptured ? 1: 0,
+      backgroundColor: this.state.imageCaptured ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
+    }
     return (
-        <Camera
-                ref="cam"
-                style={styles.container}
-                type={this.state.cameraType}
-              >
-              <View>
-              <Image style={styles.capturedImageContainer} source={{uri: this.state.capturedImage}}/>
-              </View>
-                
-                 <TouchableHighlight style= {styles.switchButton} 
-               onPress={this._switchCamera}>
-                  <Text>Switch View</Text>
-                </TouchableHighlight>
 
-                <TouchableHighlight style={styles.button}
-                onPress={this._takePicture}>
-                  <Text style={styles.buttonText}>Take Picture</Text>
-                </TouchableHighlight>
-  
-          </Camera>
-      
+      <Camera
+              ref="cam"
+              style={styles.container}
+              type={this.state.cameraType}
+      >
+        
+        <View>
+        <Image style={[styles.capturedImageContainer, imageBackground]} source={{uri: this.state.capturedImage}}/>
+        </View>
+          
+        <TouchableHighlight style= {styles.switchButton} 
+         onPress={this._switchCamera}>
+            <Text>Switch View</Text>
+          </TouchableHighlight>
+
+        <TouchableHighlight style={styles.button}
+          onPress={this._takePicture}>
+            <Text style={styles.buttonText}>Take Picture</Text>
+        </TouchableHighlight>
+
+        </Camera>
      
     );
   },
@@ -63,13 +67,9 @@ var CameraView = React.createClass({
   _takePicture() {
     var self = this;
     this.refs.cam.capture(function(err, data) {
-      //console.log(err, data.toString());
-     //self.state.capturedImage = data.toString();
      self.setState({imageCaptured:true});
      self.setState({capturedImage:data.toString()},function(){
      })
-
-      
     });
   }
 
@@ -82,9 +82,8 @@ var CameraView = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    position:'relative',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: 'transparent',
   },
   switchButton: {
@@ -113,35 +112,17 @@ var styles = StyleSheet.create({
         alignSelf: 'center'
     },
    capturedImageContainer : {
-     position:'absolute',
-        top:160,
-        left:50,
-        height: 120,
-        width:190,
-        backgroundColor: 'grey',
+
+     position:'relative',
+        top:0,
+        left:0,
+        height: 520,
+        width:520,
         borderRadius: 8, 
-   
    }
   
 
 });
-/*
-<Camera
-        ref="cam"
-        style={styles.container}
-        type={this.state.cameraType}
-      >
-         <TouchableHighlight style= {styles.switchButton} 
-       onPress={this._switchCamera}>
-          <Text>Switch View</Text>
-        </TouchableHighlight>
 
-        <TouchableHighlight style={styles.button}
-        onPress={this._takePicture}>
-          <Text style={styles.buttonText}>Take Picture</Text>
-        </TouchableHighlight>
-  </Camera>
-
-*/
 
 module.exports = CameraView;
